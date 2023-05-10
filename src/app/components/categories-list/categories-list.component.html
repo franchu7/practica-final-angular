@@ -1,0 +1,11 @@
+<div>
+  <div class="bg-white p-3 rounded">
+    <h2 class="text-center">Categorías</h2>
+  </div>
+  <app-category-form></app-category-form>
+  <div id="categoryAccordion" class="accordion">
+    <ng-container *ngFor="let category of categories; let i = index">
+      <app-category [category]="category" [index]="i"></app-category>
+    </ng-container>
+  </div>
+</div>

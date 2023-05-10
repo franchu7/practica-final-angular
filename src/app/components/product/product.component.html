@@ -1,0 +1,56 @@
+<div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-3">
+      <div class="card-body">
+        <div class="d-flex flex-column justify-content-between h-100">
+          <img
+            src="{{ product.image }}"
+            class="card-img-top"
+            alt="{{ product.title }}"
+            (mouseenter)="handleMouseEnter()"
+            (mouseleave)="handleMouseLeave()"
+            [ngStyle]="{
+              transform:
+                product.stock === 0
+                  ? 'none'
+                  : hoveredImg
+                  ? 'scale(1.4)'
+                  : 'scale(1)',
+              transition: 'transform 0.5s ease-in-out',
+              position: 'relative',
+              'z-index': 1,
+              opacity: product.stock === 0 ? 0.5 : 1
+            }"
+          />
+          <button
+            class="btn btn-warning  mt-2"
+            [disabled]="product.stock === 0"
+            (click)="addProductToCart()"
+          >
+            Agregar a la cesta
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card-body">
+        <h6 class="card-title mb-3">
+          <strong>Código de producto:</strong> {{ product.code }}
+        </h6>
+        <h6 class="card-title mb-3">
+          <strong>Nombre:</strong> {{ product.title }}
+        </h6>
+        <h6 class="card-title mb-3">
+          <strong>Descripción:</strong> {{ product.description }}
+        </h6>
+        <h6 class="card-title mb-3">
+          <strong>Precio:</strong> {{ product.price.toFixed(2) }} €
+        </h6>
+        <h6 class="card-title mb-3">
+          <strong>Stock:</strong> {{ product.stock }}
+          {{ product.stock === 1 ? "unidad" : "unidades" }}
+        </h6>
+      </div>
+    </div>
+  </div>
+</div>

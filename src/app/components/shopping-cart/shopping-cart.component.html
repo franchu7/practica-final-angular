@@ -1,0 +1,36 @@
+<div class="bg-white p-3 rounded">
+  <h2 class="text-center">Cesta de la compra</h2>
+</div>
+<app-action-confirm
+  [msg]="'¿Está seguro/a de quiere vaciar la cesta?'"
+  [type]="'empty-cart'"
+  [disabledButton]="shoppingCart.length === 0"
+></app-action-confirm>
+<div class="bg-secondary p-3 rounded">
+  <div class="bg-warning p-2 rounded">
+    <ng-container *ngIf="shoppingCart.length > 0; else emptyCart">
+      <ng-container *ngFor="let product of shoppingCart; let i = index">
+        <app-cart-product [product]="product"> </app-cart-product>
+      </ng-container>
+      <div class="bg-blue p-3 rounded">
+        <div class="row bg-info p-2 d-flex align-items-center">
+          <div class="col">
+            <div class="bg-white p-1 rounded">
+              <h5 class="text-center">Total: {{ getTotal() }} €</h5>
+            </div>
+          </div>
+          <div class="col">
+            <app-action-confirm
+              [msg]="'¿Está seguro/a de quiere realizar el pedido?'"
+              [type]="'order'"
+            ></app-action-confirm>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #emptyCart>
+      <h4 class="text-center">No hay productos en la cesta</h4>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<button [disabled]="disabledButton" class="btn btn-{{type === 'empty-cart' ? 'danger' : 'success'}} my-2 w-100" (click)="openModal()">
+    {{type === 'empty-cart' ? 'Vaciar cesta' : 'Realizar pedido'}}
+  </button>
+  <div class="modal" tabindex="-1" role="dialog" [ngClass]="{'d-block': modalOpened}">
+    <div class="modal-overlay" (click)="closeModal()" *ngIf="modalOpened"></div>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{msg}}</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+          <button
+            type="button"
+            class="btn btn-{{type === 'empty-cart' ? 'danger' : 'success'}}"
+            (click)="confirmAction()"
+          >
+            Continuar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
