@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CategoryI, CartProductI } from 'src/app/data/interfaces';
 
 @Component({
@@ -10,6 +10,7 @@ export class ActionConfirmComponent implements OnInit {
   @Input() msg!: string;
   @Input() type!: 'empty-cart' | 'order';
   @Input() disabledButton!: boolean;
+  @Output() onCheckout = new EventEmitter<void>();
 
   public modalOpened: boolean = false;
 
@@ -23,7 +24,12 @@ export class ActionConfirmComponent implements OnInit {
     this.modalOpened = false;
   }
 
+  checkout(): void {
+    this.onCheckout.emit();
+  }
+
   confirmAction(): void {
+    this.checkout();
     if (this.type === 'empty-cart') {
       const categories = JSON.parse(localStorage.getItem('categories')!) as CategoryI[];
       const shopCart = JSON.parse(localStorage.getItem('shopping-cart')!) as CartProductI[];

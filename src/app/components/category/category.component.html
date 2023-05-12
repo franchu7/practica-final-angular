@@ -9,10 +9,11 @@
         [attr.data-bs-target]="'#collapse-' + index"
         [attr.aria-expanded]="false"
         [attr.aria-controls]="'collapse-' + index"
+        (click)="viewItem = !viewItem"
       >
         <h3
           class="p-3 rounded w-100 text-center mx-3"
-          style="background: '#576CBC'"
+          style="background: '#576CBC'; color: black;"
         >
           {{ category.name }}
         </h3>
@@ -22,6 +23,7 @@
     <div
       [attr.id]="'collapse-' + index"
       class="accordion-collapse collapse"
+      [ngClass]="{'show': viewItem}"
       [attr.aria-labelledby]="'heading-' + index"
     >
       <div class="accordion-body">

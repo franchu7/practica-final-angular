@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { defaultCats } from 'src/app/data/data';
 import { CategoryI } from 'src/app/data/interfaces';
 import { v4 as uuidv4 } from 'uuid';
@@ -9,16 +10,12 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./category-form.component.css'],
 })
 export class CategoryFormComponent implements OnInit {
-  public modalOpened: boolean = false;
   public categoryName: string = '';
 
-  openModal() {
-    this.modalOpened = true;
-  }
+  constructor(private modalService: NgbModal) {}
 
-  closeModal() {
-    this.modalOpened = false;
-    this.categoryName = '';
+  open(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   submitForm() {
@@ -31,10 +28,9 @@ export class CategoryFormComponent implements OnInit {
     ];
     localStorage.setItem('categories', JSON.stringify(newCategories));
     window.dispatchEvent(new Event('storage'));
-    this.closeModal();
+    this.categoryName = '';
+    this.modalService.dismissAll();
   }
-
-  constructor() {}
 
   ngOnInit(): void {}
 }

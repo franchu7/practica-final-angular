@@ -1,12 +1,12 @@
 <div class="p-3 rounded" style="background: '#455696'">
-  <h2 class="text-center">Cesta de la compra</h2>
+  <h2 class="text-center" style="color: black;">Cesta de la compra</h2>
 </div>
 <app-action-confirm
   [msg]="'¿Está seguro/a de quiere vaciar la cesta?'"
   [type]="'empty-cart'"
   [disabledButton]="shoppingCart.length === 0"
 ></app-action-confirm>
-<div class="p-3 rounded" style="background: '#19376D'">
+<div class="p-3 rounded mt-3" style="background: '#19376D'">
   <div class="p-2 rounded" style="background: '#576CBC'">
     <ng-container *ngIf="shoppingCart.length > 0; else emptyCart">
       <ng-container *ngFor="let product of shoppingCart; let i = index">
@@ -23,6 +23,7 @@
             <app-action-confirm
               [msg]="'¿Está seguro/a de quiere realizar el pedido?'"
               [type]="'order'"
+              (onCheckout)="checkout()"
             ></app-action-confirm>
           </div>
         </div>
@@ -30,7 +31,8 @@
     </ng-container>
 
     <ng-template #emptyCart>
-      <h4 class="text-center">No hay productos en la cesta</h4>
+      <h4 class="text-center" style="color: black;">No hay productos en la cesta</h4>
     </ng-template>
   </div>
 </div>
+<div *ngIf="orderPlaced" class="alert alert-success mt-3">¡Pedido realizado con éxito!</div>

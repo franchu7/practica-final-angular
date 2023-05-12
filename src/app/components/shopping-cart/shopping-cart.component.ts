@@ -8,6 +8,7 @@ import { CartProductI } from 'src/app/data/interfaces';
 })
 export class ShoppingCartComponent implements OnInit {
   shoppingCart: CartProductI[] = [];
+  orderPlaced = false;
 
   constructor() {}
 
@@ -30,5 +31,12 @@ export class ShoppingCartComponent implements OnInit {
     return this.shoppingCart
       .reduce((acc, product) => acc + product.amount, 0)
       .toFixed(2);
+  }
+
+  checkout() {
+    this.orderPlaced = true;
+    setTimeout(() => {
+      this.orderPlaced = false;
+    }, 3000);
   }
 }

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { defaultCats } from 'src/app/data/data';
 import { CategoryI } from 'src/app/data/interfaces';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,7 +11,6 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class ProductFormComponent implements OnInit {
   @Input() category!: CategoryI;
-  public modalOpened: boolean = false;
   public image: File = new File([], '');
   public srcImage: string = 'assets/images/defaultCover.jpg';
   public previewImg: string = '';
@@ -23,27 +23,12 @@ export class ProductFormComponent implements OnInit {
     image: '',
   };
 
-  constructor() {}
+  constructor(private modalService: NgbModal) {}
 
   ngOnInit(): void {}
 
-  openModal() {
-    this.modalOpened = true;
-  }
-
-  closeModal() {
-    this.modalOpened = false;
-    this.product = {
-      code: '',
-      title: '',
-      description: '',
-      price: '',
-      stock: '',
-      image: '',
-    };
-    this.image = new File([], '');
-    this.srcImage = 'assets/images/defaultCover.jpg';
-    this.previewImg = '';
+  open(content: TemplateRef<any>) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   onDrop(event: Event) {
@@ -87,6 +72,18 @@ export class ProductFormComponent implements OnInit {
     });
     localStorage.setItem('categories', JSON.stringify(updatedCategories));
     window.dispatchEvent(new Event('storage'));
-    this.closeModal();
+
+    this.product = {
+      code: '',
+      title: '',
+      description: '',
+      price: '',
+      stock: '',
+      image: '',
+    };
+    this.image = new File([], '');
+    this.srcImage = 'assets/images/defaultCover.jpg';
+    this.previewImg = '';
+    this.modalService.dismissAll();
   }
 }

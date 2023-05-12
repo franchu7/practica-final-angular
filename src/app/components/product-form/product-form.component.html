@@ -1,161 +1,149 @@
-<div
-  class="modal"
-  tabindex="-1"
-  role="dialog"
-  [ngClass]="{ 'd-block': modalOpened }"
->
-  <div class="modal-overlay" (click)="closeModal()" *ngIf="modalOpened"></div>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">
-          Añadir nuevo juego de {{ category.name.split(" ")[2] }}
-        </h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-          (click)="closeModal()"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form (ngSubmit)="submitForm()" #productForm="ngForm">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="code">Código del producto *</label>
-            <input
-              type="text"
-              class="form-control"
-              id="code"
-              placeholder="Código del juego"
-              required
-              [(ngModel)]="product.code"
-              name="code"
-              pattern="^[a-zA-Z0-9]+$"
-              #codeInput="ngModel"
-              [ngClass]="{
-                'is-invalid': codeInput.invalid && codeInput.dirty
-              }"
-            />
-            <div class="invalid-feedback">Código no válido.</div>
-          </div>
-          <div class="form-group">
-            <label for="title">Nombre del producto *</label>
-            <input
-              type="text"
-              class="form-control"
-              id="title"
-              placeholder="Nombre del juego"
-              required
-              [(ngModel)]="product.title"
-              name="title"
-              pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"
-              #titleInput="ngModel"
-              [ngClass]="{
-                'is-invalid': titleInput.invalid && titleInput.dirty
-              }"
-            />
-            <div class="invalid-feedback">Nombre no válido.</div>
-          </div>
-          <div class="form-group">
-            <label for="description">Descripción del producto *</label>
-            <input
-              type="text"
-              class="form-control"
-              id="description"
-              placeholder="Descripción del juego"
-              required
-              [(ngModel)]="product.description"
-              name="description"
-              pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
-              #descriptionInput="ngModel"
-              [ngClass]="{
-                'is-invalid': descriptionInput.invalid && descriptionInput.dirty
-              }"
-            />
-            <div class="invalid-feedback">Descripción no válida.</div>
-          </div>
-          <div class="form-group">
-            <label for="price">Precio del producto *</label>
-            <input
-              type="text"
-              class="form-control"
-              id="price"
-              placeholder="Precio del juego"
-              required
-              [(ngModel)]="product.price"
-              name="price"
-              pattern="^\d+(\.\d{1,2})?$"
-              #priceInput="ngModel"
-              [ngClass]="{
-                'is-invalid': priceInput.invalid && priceInput.dirty
-              }"
-            />
-            <div class="invalid-feedback">Precio no válido.</div>
-          </div>
-          <div class="form-group">
-            <label for="stock">Stock del producto *</label>
-            <input
-              type="number"
-              class="form-control"
-              id="stock"
-              placeholder="Stock del juego"
-              required
-              [(ngModel)]="product.stock"
-              name="stock"
-              pattern="^\d+$"
-              #stockInput="ngModel"
-              [ngClass]="{
-                'is-invalid': stockInput.invalid && stockInput.dirty
-              }"
-            />
-            <div class="invalid-feedback">Stock no válido.</div>
-          </div>
-          <div class="form-group">
-            <label>Imagen del producto</label>
-            <div class="custom-file">
-              <input
-                type="file"
-                class="custom-file-input"
-                id="image"
-                accept="image/*"
-                (change)="onDrop($event)"
-              />
-              <label class="custom-file-label" for="image"
-                >Seleccionar archivo</label
-              >
-            </div>
-          </div>
-          <img
-            *ngIf="srcImage"
-            [src]="srcImage"
-            [style.width]="'150px'"
-            [style.height]="'150px'"
-            class="img-thumbnail"
-          />
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            (click)="closeModal()"
-          >
-            Cancelar
-          </button>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="productForm.invalid"
-          >
-            Guardar
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-<button type="button" class="btn btn-success mt-2 mx-3" (click)="openModal()">
+<button type="button" class="btn btn-success mt-2 mx-4" (click)="open(content)">
   Añadir juego
 </button>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+      Añadir nuevo juego de {{ category.name.split(" ")[2] }}
+    </h5>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form (ngSubmit)="submitForm()" #productForm="ngForm">
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="code">Código del producto *</label>
+        <input
+          type="text"
+          class="form-control"
+          id="code"
+          placeholder="Código del juego"
+          required
+          [(ngModel)]="product.code"
+          name="code"
+          pattern="^[a-zA-Z0-9]+$"
+          #codeInput="ngModel"
+          [ngClass]="{
+            'is-invalid': codeInput.invalid && codeInput.dirty
+          }"
+        />
+        <div class="invalid-feedback">Código no válido.</div>
+      </div>
+      <div class="form-group">
+        <label for="title">Nombre del producto *</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          placeholder="Nombre del juego"
+          required
+          [(ngModel)]="product.title"
+          name="title"
+          pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$"
+          #titleInput="ngModel"
+          [ngClass]="{
+            'is-invalid': titleInput.invalid && titleInput.dirty
+          }"
+        />
+        <div class="invalid-feedback">Nombre no válido.</div>
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción del producto *</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          placeholder="Descripción del juego"
+          required
+          [(ngModel)]="product.description"
+          name="description"
+          pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+          #descriptionInput="ngModel"
+          [ngClass]="{
+            'is-invalid': descriptionInput.invalid && descriptionInput.dirty
+          }"
+        />
+        <div class="invalid-feedback">Descripción no válida.</div>
+      </div>
+      <div class="form-group">
+        <label for="price">Precio del producto *</label>
+        <input
+          type="text"
+          class="form-control"
+          id="price"
+          placeholder="Precio del juego"
+          required
+          [(ngModel)]="product.price"
+          name="price"
+          pattern="^\d+(\.\d{1,2})?$"
+          #priceInput="ngModel"
+          [ngClass]="{
+            'is-invalid': priceInput.invalid && priceInput.dirty
+          }"
+        />
+        <div class="invalid-feedback">Precio no válido.</div>
+      </div>
+      <div class="form-group">
+        <label for="stock">Stock del producto *</label>
+        <input
+          type="number"
+          class="form-control"
+          id="stock"
+          placeholder="Stock del juego"
+          required
+          [(ngModel)]="product.stock"
+          name="stock"
+          pattern="^\d+$"
+          min="1"
+          #stockInput="ngModel"
+          [ngClass]="{
+            'is-invalid': stockInput.invalid && stockInput.dirty
+          }"
+        />
+        <div class="invalid-feedback">Stock no válido.</div>
+      </div>
+      <div class="form-group">
+        <label>Imagen del producto</label>
+        <div class="custom-file">
+          <input
+            type="file"
+            class="custom-file-input"
+            id="image"
+            accept="image/*"
+            (change)="onDrop($event)"
+          />
+          <label class="custom-file-label" for="image"
+            >Seleccionar archivo</label
+          >
+        </div>
+      </div>
+      <img
+        *ngIf="srcImage"
+        [src]="srcImage"
+        [style.width]="'150px'"
+        [style.height]="'150px'"
+        class="img-thumbnail"
+      />
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="productForm.invalid"
+      >
+        Guardar
+      </button>
+    </div>
+  </form>
+</ng-template>
