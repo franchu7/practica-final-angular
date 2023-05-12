@@ -11,13 +11,11 @@
     <h5 class="modal-title" id="modal-basic-title">Añadir nueva categoría</h5>
     <button
       type="button"
-      class="close"
+      class="btn-close"
       data-dismiss="modal"
       aria-label="Close"
       (click)="modal.dismiss()"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
+    ></button>
   </div>
   <form (ngSubmit)="submitForm()" #categoryForm="ngForm">
     <div class="modal-body">

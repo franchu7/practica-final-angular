@@ -9,7 +9,7 @@ import { CategoryI } from 'src/app/data/interfaces';
 export class CategoryComponent implements OnInit {
   @Input() category!: CategoryI;
   @Input() index!: number;
-  viewItem: boolean = true;
+  viewItem: boolean = false;
   
   constructor() {}
 
